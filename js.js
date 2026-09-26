@@ -22,7 +22,25 @@ let datalist_word_delete=document.getElementById("datalist_word_delete");
 let encode_url=document.getElementById("encode_url");
 let share_link=document.getElementById("share_link");
 let select_list=document.getElementById("select_list");
+let sidebar_button=document.getElementById("sidebar_button");
+let sidebar=document.getElementById("sidebar");
+let sidebar_family=document.getElementById("sidebar_family");
 
+function hideDistance(){
+    sidebar_family.style.setProperty("--hide_distance",-sidebar.offsetWidth+"px");
+}
+sidebar_button.addEventListener("click",()=>{
+    hideDistance();
+    console.log(sidebar.offsetWidth);
+    if(sidebar_family.classList.contains("hide_sidebar")){
+        sidebar_family.classList.remove("hide_sidebar");
+        sidebar_button.innerText="關閉目錄";
+    }
+    else{
+        sidebar_family.classList.add("hide_sidebar");
+        sidebar_button.innerText="開啟目錄";
+    }
+})
 function setLocalStorage(){
     localStorage.setItem("LocalData",JSON.stringify({
         listInList:listInList,

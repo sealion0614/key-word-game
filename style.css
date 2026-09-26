@@ -6,6 +6,7 @@ body{
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    word-break: break-all;
 }
 #create_word_group{
     display:flex;
@@ -15,14 +16,28 @@ body{
     justify-content: center;
     align-items: center;
 }
-#sidebar{
+.sidebar_family{
+    top:0;
+    left:0;
     position:fixed;
+    display:flex;
+    min-width:fit-content;
+    flex-direction: row;
+    transition: transform 0.3s ease-in-out;
+}
+.sidebar_button{
+    display: flex;
+    align-self: flex-start;
+}
+.sidebar{
     display: flex;
     flex-direction: column;
     min-height: 100vh;
     border:solid 5px;
-    top:0;
-    left:0;
+    background-color: rgb(218, 224, 238);
+}
+.hide_sidebar{
+    transform: translateX(var(--hide_distance,0px));
 }
 #content{
     display:flex;
