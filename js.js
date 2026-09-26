@@ -25,13 +25,16 @@ let select_list=document.getElementById("select_list");
 let sidebar_button=document.getElementById("sidebar_button");
 let sidebar=document.getElementById("sidebar");
 let sidebar_family=document.getElementById("sidebar_family");
-
+hideDistance();
 function hideDistance(){
     sidebar_family.style.setProperty("--hide_distance",-sidebar.offsetWidth+"px");
 }
 sidebar_button.addEventListener("click",()=>{
     hideDistance();
     console.log(sidebar.offsetWidth);
+    if(!sidebar_family.classList.contains("second_turn")){
+       sidebar_family.classList.add("second_turn"); 
+    }
     if(sidebar_family.classList.contains("hide_sidebar")){
         sidebar_family.classList.remove("hide_sidebar");
         sidebar_button.innerText="關閉目錄";

@@ -23,7 +23,8 @@ body{
     display:flex;
     min-width:fit-content;
     flex-direction: row;
-    transition: transform 0.3s ease-in-out;
+
+    transform: translateX(0);
 }
 .sidebar_button{
     display: flex;
@@ -35,6 +36,9 @@ body{
     min-height: 100vh;
     border:solid 5px;
     background-color: rgb(218, 224, 238);
+}
+.second_turn{
+    transition: transform 0.3s ease-in-out;
 }
 .hide_sidebar{
     transform: translateX(var(--hide_distance,0px));
