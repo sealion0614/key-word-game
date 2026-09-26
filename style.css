@@ -3,18 +3,39 @@
 }
 body{
     display:flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+#create_word_group{
+    display:flex;
     flex-direction: column;
+    min-height:fit-content;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
 }
-#custom_word_group{
-    flex-direction:row;
-    justify-content: center;
-    align-items: center;
-}
-select{
-    display: flex;
+#sidebar{
     position:fixed;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    border:solid 5px;
     top:0;
     left:0;
+}
+#content{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+#custom_word{
+    min-height:fit-content;
+    justify-self: center;
+}
+.custom_word_buttons{
+    display:flex;
+    min-height:fit-content;
+    justify-content: center;
 }

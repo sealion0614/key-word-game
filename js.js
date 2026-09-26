@@ -1,4 +1,4 @@
-let selects=document.getElementById("selects");
+let select_button=document.getElementById("select_button");
 let custom_word_option=document.getElementById("custom_word_option");
 let custom_word_group=document.getElementById("custom_word_group");
 let random_custom_word=document.getElementById("random_custom_word");
@@ -21,6 +21,7 @@ let delete_custom_word=document.getElementById("delete_custom_word");
 let datalist_word_delete=document.getElementById("datalist_word_delete");
 let encode_url=document.getElementById("encode_url");
 let share_link=document.getElementById("share_link");
+let select_list=document.getElementById("select_list");
 
 function setLocalStorage(){
     localStorage.setItem("LocalData",JSON.stringify({
@@ -35,11 +36,11 @@ let listInList={
     1:{name:"預設關鍵字",current:["美國","日本","新加玻","加拿大"],reserve:["美國","日本","新加玻","加拿大"]},
     2:{name:"預設自訂關鍵字",current:[],reserve:[]},
 };
-usingCount=selects.value;
+usingCount=1;
 custom_word_group.classList.remove("hid");
 create_word_group.classList.add("hid");
-listInList[selects.value].current=[...listInList[selects.value].reserve];
-custom_word.innerText="這是一個"+listInList[selects.value].name+"的關鍵字";
+listInList[1].current=[...listInList[1].reserve];
+custom_word.innerText="這是一個"+listInList[1].name+"的關鍵字";
 
 const showing_custom_word=()=>{
     if(listInList[nowCount]){
@@ -73,18 +74,27 @@ const shuffle=(arr)=>{
         [arr[i],arr[j]]=[arr[j],arr[i]];
     }
 }
-selects.addEventListener("change",()=>{
-    if(selects.value=="0"){
-        create_word_group.classList.remove("hid");
-        custom_word_group.classList.add("hid");
+custom_word_create_option.addEventListener("click",()=>{
+    console.log("create");
+    create_word_group.classList.remove("hid");
+    custom_word_group.classList.add("hid");
+})
+select_button.addEventListener("click",()=>{
+    if(select_list.classList.contains("hid")){
+        select_button.innerText="選擇清單V";
+        select_list.classList.remove("hid");
     }
     else{
-        usingCount=selects.value;
-        custom_word_group.classList.remove("hid");
-        create_word_group.classList.add("hid");
-        listInList[selects.value].current=[...listInList[selects.value].reserve];
-        custom_word.innerText="這是一個"+listInList[selects.value].name+"的關鍵字";
+        select_button.innerText="選擇清單>";
+        select_list.classList.add("hid");
     }
+})
+select_list.addEventListener("click",(e)=>{
+    usingCount=e.target.dataset.value;
+    custom_word_group.classList.remove("hid");
+    create_word_group.classList.add("hid");
+    listInList[e.target.dataset.value].current=[...listInList[e.target.dataset.value].reserve];
+    custom_word.innerText="這是一個"+listInList[e.target.dataset.value].name+"的關鍵字";
 })
 
 
@@ -138,7 +148,7 @@ custom_list_button.addEventListener("click",()=>{
             present_list.innerText="正在設定的清單："+listInList[nowCount].name;
             create_custom_word.placeholder="創建"+listInList[nowCount].name+"的關鍵字";
             delete_custom_word.placeholder="刪除"+listInList[nowCount].name+"的關鍵字";
-            selects.innerHTML+=`<option id="selects_option${nowCount}"value=\"${listCount}\">${listInList[listCount].name}</option>`;
+            select_list.innerHTML+=`<li id="selects_option${nowCount}"data-value=\"${listCount}\">${listInList[listCount].name}</li>`;
             datalist_find.innerHTML+=`<option id="find_option${nowCount}" value=\"${listInList[listCount].name}\"></option>`;
             datalist_delete.innerHTML+=`<option id="delete_option${nowCount}" value=\"${listInList[listCount].name}\"></option>`;
             showing_custom_word();
@@ -197,7 +207,7 @@ delete_list_button.addEventListener("click",()=>{
             for(let i=1;i<listCount;i++){
             if(listInList[i]){
                 if(delete_custom_list.value==listInList[i].name){
-                    selects.removeChild(document.getElementById(`selects_option`+i));
+                    select_list.removeChild(document.getElementById(`selects_option`+i));
                     datalist_find.removeChild(document.getElementById(`find_option`+i));
                     datalist_delete.removeChild(document.getElementById(`delete_option`+i));
                     datalist_word_delete.innerHTML='';
@@ -285,7 +295,7 @@ function decode_url(){
         listInList[0].reserve=[...real_shared.reserve];
         custom_word.innerText="這是一個"+real_shared.name+"的關鍵字";
 
-        selects.classList.add("hid");
+        select_list.classList.add("hid");
         create_word_group.classList.add("hid");
         custom_word_group.classList.remove("hid");
         encode_url.classList.add("hid");

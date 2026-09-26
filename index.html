@@ -7,49 +7,61 @@
     <title>關鍵字們</title>
 </head>
 <body>
-    <select id="selects">
-        <option id="custom_word_create_option" value="0">關鍵字清單管理器</option>
-        <option id="selects_option1" value="1" selected>預設關鍵字</option>
-        <option id="selects_option2" value="2">預設自訂關鍵字</option>
-    </select>
-    <h1>關鍵字遊戲</h1>
+    <div id="sidebar">
+        <div class="selects_family">
+            <button id="select_button">選擇清單></button>
+            <ul id="select_list" class="hid">
+                <li id="selects_option1" data-value="1">預設關鍵字</li>
+                <li id="selects_option2" data-value="2">預設自訂關鍵字</li>   
+            </ul>
+        </div>
+        <button id="custom_word_create_option">關鍵字清單管理器</button>
+    </div>
+    <div id="content">
+        <h1>關鍵字遊戲</h1>
     <div id="create_word_group" class="hid">
         <h2 id="present_list">正在設定的清單：預設自訂關鍵字</h2>
         <h1 id="view_custom_word">此清單尚無關鍵字</h1>
-        <input id="create_custom_list" placeholder="創建自訂清單">
-        <button id="custom_list_button">創建清單</button>
-        <br>
-        <input id="find_custom_list" list="datalist_find" placeholder="尋找自訂清單">
-        <datalist id="datalist_find">
-            <option id="find_option1" value="預設關鍵字"></option>
-            <option id="find_option2" value="預設自訂關鍵字"></option>
-        </datalist>
-        <button id="find_list_button">尋找清單</button>
-        <br>
-        <input id="delete_custom_list" list="datalist_delete" placeholder="刪除清單">
-        <datalist id="datalist_delete">
-            <option id="delete_option1" value="預設關鍵字"></option>
-            <option id="delete_option2" value="預設自訂關鍵字"></option>
-        </datalist>
-        <button id="delete_list_button">刪除清單</button>
-        <br>
-        <br>
-
-        <input id="create_custom_word" placeholder="創建預設自訂清單關鍵字">
-        <button id="custom_word_button">創建關鍵字</button>
-        <br>
-
-        <input id="delete_custom_word" list="datalist_word_delete" placeholder="刪除預設自訂清單關鍵字">
-        <datalist id="datalist_word_delete">
-        </datalist>
-        <button id="delete_word_button">刪除關鍵字</button>
+        <div id="create_list">
+            <input id="create_custom_list" placeholder="創建自訂清單">
+            <button id="custom_list_button">創建清單</button>
+        </div>
+        <div id="find_list">
+            <input id="find_custom_list" list="datalist_find" placeholder="尋找自訂清單">
+            <datalist id="datalist_find">
+                <option id="find_option1" value="預設關鍵字"></option>
+                <option id="find_option2" value="預設自訂關鍵字"></option>
+            </datalist>
+            <button id="find_list_button">尋找清單</button>
+        </div>
+        <div>
+            <input id="delete_custom_list" list="datalist_delete" placeholder="刪除清單">
+                <datalist id="datalist_delete">
+                    <option id="delete_option1" value="預設關鍵字"></option>
+                    <option id="delete_option2" value="預設自訂關鍵字"></option>
+                </datalist>
+            <button id="delete_list_button">刪除清單</button>
+        </div>
+        <div>
+            <input id="create_custom_word" placeholder="創建預設自訂清單關鍵字">
+            <button id="custom_word_button">創建關鍵字</button>
+        </div>
+        <div>
+            <input id="delete_custom_word" list="datalist_word_delete" placeholder="刪除預設自訂清單關鍵字">
+                <datalist id="datalist_word_delete">
+                </datalist>
+            <button id="delete_word_button">刪除關鍵字</button>
+        </div>
     </div>
 
     <div id="custom_word_group" class="hid">
         <h1 id="custom_word">這是一個自訂關鍵字</h1>
-        <button id="random_custom_word">隨機關鍵字</button>
-        <button id="encode_url">獲得網址</button>
-        <div id="share_link"></div>
+        <div class="custom_word_buttons">
+            <button id="random_custom_word">隨機關鍵字</button>
+            <button id="encode_url">獲得網址</button>
+            <div id="share_link"></div>
+        </div>
+    </div>
     </div>
     
     <script src="js.js"></script>
