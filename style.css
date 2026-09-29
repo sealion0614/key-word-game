@@ -58,3 +58,46 @@ body{
     min-height:fit-content;
     justify-content: center;
 }
+ul{
+    list-style: none;
+    padding-left: 0;
+}
+button{
+    appearance: none;
+    background: none;
+    border:none;
+    margin:3px;
+    /* transition: 0.5s ease; */
+    /* background-color: rgb(198, 213, 226); */
+    /* padding: 0; */
+}
+button,li{
+    cursor:pointer;
+    font-size: small;
+}
+li{
+    background:linear-gradient(to right,rgb(90, 178, 255), rgb(198, 213, 226));
+    background-size: 200% 100%;
+    background-position: right bottom;
+    transition: background-position 0.5s ease;
+}
+button{
+    background:linear-gradient(to right,rgb(120, 90, 255), rgb(218, 198, 226));
+    background-size: 200% 100%;
+    background-position: right bottom;
+    transition: background-position 0.5s ease;
+}
+/* button:hover{
+    border: 3px solid rgb(141, 184, 221);
+    border-radius: 20%;
+    background-color: rgb(121, 180, 231);
+
+}
+button:active{
+    border-radius: 20%;
+    background-color: rgb(67, 99, 127);
+
+} */
+button:hover,li:hover{
+    background-position: left bottom;
+}

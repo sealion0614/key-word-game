@@ -29,6 +29,11 @@ hideDistance();
 function hideDistance(){
     sidebar_family.style.setProperty("--hide_distance",-sidebar.offsetWidth+"px");
 }
+function hideSidebarHandler(){
+    hideDistance();
+    sidebar_family.classList.add("hide_sidebar");
+    sidebar_button.innerText="開啟目錄";
+}
 sidebar_button.addEventListener("click",()=>{
     hideDistance();
     console.log(sidebar.offsetWidth);
@@ -64,6 +69,7 @@ listInList[1].current=[...listInList[1].reserve];
 custom_word.innerText="這是一個"+listInList[1].name+"的關鍵字";
 
 const showing_custom_word=()=>{
+    
     if(listInList[nowCount]){
         if(listInList[nowCount].reserve.length==0){
         view_custom_word.innerText="此清單尚無關鍵字";
@@ -95,7 +101,13 @@ const shuffle=(arr)=>{
         [arr[i],arr[j]]=[arr[j],arr[i]];
     }
 }
+create_custom_list.addEventListener("focus",hideSidebarHandler);
+delete_custom_list.addEventListener("focus",hideSidebarHandler);
+find_custom_list.addEventListener("focus",hideSidebarHandler);
+create_custom_word.addEventListener("focus",hideSidebarHandler);
+delete_custom_word.addEventListener("focus",hideSidebarHandler);
 custom_word_create_option.addEventListener("click",()=>{
+    hideSidebarHandler();
     console.log("create");
     create_word_group.classList.remove("hid");
     custom_word_group.classList.add("hid");
@@ -111,6 +123,7 @@ select_button.addEventListener("click",()=>{
     }
 })
 select_list.addEventListener("click",(e)=>{
+    hideSidebarHandler();
     usingCount=e.target.dataset.value;
     custom_word_group.classList.remove("hid");
     create_word_group.classList.add("hid");
@@ -120,6 +133,7 @@ select_list.addEventListener("click",(e)=>{
 
 
 random_custom_word.addEventListener("click",()=>{
+    hideSidebarHandler();
     if(listInList[usingCount].current[listInList[usingCount].current.length-1]!=undefined){
         shuffle(listInList[usingCount].current);
         custom_word.innerText=listInList[usingCount].current[listInList[usingCount].current.length-1];
@@ -132,6 +146,7 @@ random_custom_word.addEventListener("click",()=>{
 })
 
 custom_word_button.addEventListener("click",()=>{
+    hideSidebarHandler();
     if(create_custom_word.value.trim()!=""){
         let flag=listInList[nowCount].reserve.find(function(item){
             return create_custom_word.value==item;
@@ -150,6 +165,7 @@ custom_word_button.addEventListener("click",()=>{
     }
 })
 custom_list_button.addEventListener("click",()=>{
+    hideSidebarHandler();
     if(create_custom_list.value.trim()!=""&&!listInList[listCount]){
         let flag=true;
         for(let i=1;i<listCount;i++){
@@ -185,9 +201,11 @@ custom_list_button.addEventListener("click",()=>{
     }
 })
 datalist_find.addEventListener("click",()=>{
+    hideSidebarHandler();
     console.log(datalist_find.value);
 })
 find_list_button.addEventListener("click",()=>{
+    hideSidebarHandler();
     if(find_custom_list.value.trim()!=""){
         let flag=false;
         for(let i=1;i<listCount;i++){
@@ -219,6 +237,7 @@ find_list_button.addEventListener("click",()=>{
 })
 
 delete_list_button.addEventListener("click",()=>{
+    hideSidebarHandler();
     if(delete_custom_list.value.trim()!=""){
         let flag=false;
         if(obj_length(listInList)==0){
@@ -268,6 +287,7 @@ delete_list_button.addEventListener("click",()=>{
 })
 
 delete_word_button.addEventListener("click",()=>{
+    hideSidebarHandler();
     if(delete_custom_word.value.trim()!=""){
         
         let flag=false;
@@ -293,10 +313,13 @@ delete_word_button.addEventListener("click",()=>{
 })
 
 encode_url.addEventListener("click",()=>{
+    hideSidebarHandler();
     let json=JSON.stringify(listInList[usingCount]);
     let encoded=btoa(unescape(encodeURIComponent(json)));
     try{
         share_link.innerHTML=`<input readonly value="${location.origin+location.pathname}?data=${encoded}">`;
+        navigator.clipboard.writeText(`${location.origin+location.pathname}?data=${encoded}`);
+        alert("已複製連結至剪貼簿，亦可自行全選複製");
     }
     catch(e){
         alert("似乎無法產生網址，請開啟無痕視窗嘗試");
