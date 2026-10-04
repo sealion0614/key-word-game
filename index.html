@@ -17,12 +17,14 @@
                 </ul>
             </div>
             <button id="custom_word_create_option">關鍵字清單管理器</button>
-            <button id="settings">設定</button>
+            <button id="setting_button">設定</button>
         </div>
-        <button id="sidebar_button" class="sidebar_button">開啟目錄</button>
+        <div class="sidebar_button_group">
+            <button id="sidebar_button" class="sidebar_button">開啟目錄</button>
+            <button id="save_changes" class="sidebar_button">儲存變更</button>
+        </div>
     </div>
     <div id="content">
-        <h1>關鍵字遊戲</h1>
     <div id="create_word_group" class="hid">
         <h2 id="present_list">正在設定的清單：預設自訂關鍵字</h2>
         <h1 id="view_custom_word">此清單尚無關鍵字</h1>
@@ -62,10 +64,28 @@
         <h1 id="custom_word">這是一個自訂關鍵字</h1>
         <div class="custom_word_buttons">
             <button id="random_custom_word">隨機關鍵字</button>
-            <button id="encode_url">獲得網址</button>
+            <button id="encode_url">複製使用者頁面連結</button>
             <div id="share_link"></div>
         </div>
     </div>
+
+    </div>
+    <div id="setting_family" class="hid">
+        <h1>設定</h1>
+        <button id="copy_developer_link">複製開發者頁面連結</button>
+        <button id="restart">還原原始頁面</button>
+        <div id="color_setting">
+            <h2>顏色設定</h2>
+            <h3>背景色</h3>
+            <div id="background_color_picker"></div>
+            <h3>按鈕色</h3>
+            <h4>漸層色1</h4>
+            <div id="button_color1_picker"></div>
+            <h4>漸層色2</h4>
+            <div id="button_color2_picker"></div>
+            <h3>文字色</h3>
+            <div id="word_color_picker"></div>
+        </div>
     </div>
     
     <script src="js.js"></script>

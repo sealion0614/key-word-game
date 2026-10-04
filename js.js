@@ -25,6 +25,17 @@ let select_list=document.getElementById("select_list");
 let sidebar_button=document.getElementById("sidebar_button");
 let sidebar=document.getElementById("sidebar");
 let sidebar_family=document.getElementById("sidebar_family");
+let setting_family=document.getElementById("setting_family");
+let setting_button=document.getElementById("setting_button");
+let copy_developer_link=document.getElementById("copy_developer_link");
+let color_setting=document.getElementById("color_setting");
+let background_color_picker=document.getElementById("background_color_picker");
+let button_color1_picker=document.getElementById("button_color1_picker");
+let button_color2_picker=document.getElementById("button_color2_picker");
+let word_color_picker=document.getElementById("word_color_picker");
+let save_changes=document.getElementById("save_changes");
+let restart=document.getElementById("restart");
+let user=false;
 hideDistance();
 function hideDistance(){
     sidebar_family.style.setProperty("--hide_distance",-sidebar.offsetWidth+"px");
@@ -49,19 +60,13 @@ sidebar_button.addEventListener("click",()=>{
         sidebar_button.innerText="開啟目錄";
     }
 })
-function setLocalStorage(){
-    localStorage.setItem("LocalData",JSON.stringify({
-        listInList:listInList,
-        listCount:listCount,
-        nowCount:nowCount,
-        usingCount:usingCount,
-    }))
-}
+
 let listCount=3,nowCount=2,usingCount=0;
 let listInList={
     1:{name:"預設關鍵字",current:["美國","日本","新加玻","加拿大"],reserve:["美國","日本","新加玻","加拿大"]},
     2:{name:"預設自訂關鍵字",current:[],reserve:[]},
 };
+
 usingCount=1;
 custom_word_group.classList.remove("hid");
 create_word_group.classList.add("hid");
@@ -109,6 +114,7 @@ delete_custom_word.addEventListener("focus",hideSidebarHandler);
 custom_word_create_option.addEventListener("click",()=>{
     hideSidebarHandler();
     console.log("create");
+    
     create_word_group.classList.remove("hid");
     custom_word_group.classList.add("hid");
 })
@@ -127,13 +133,21 @@ select_list.addEventListener("click",(e)=>{
     usingCount=e.target.dataset.value;
     custom_word_group.classList.remove("hid");
     create_word_group.classList.add("hid");
+    setting_family.classList.add("hid");
     listInList[e.target.dataset.value].current=[...listInList[e.target.dataset.value].reserve];
     custom_word.innerText="這是一個"+listInList[e.target.dataset.value].name+"的關鍵字";
 })
-
+setting_button.addEventListener("click",()=>{
+    hideSidebarHandler()
+    setting_family.classList.remove("hid");
+    custom_word_group.classList.add("hid");
+    create_word_group.classList.add("hid");
+})
 
 random_custom_word.addEventListener("click",()=>{
-    hideSidebarHandler();
+    if(!user){
+        hideSidebarHandler();
+    }
     if(listInList[usingCount].current[listInList[usingCount].current.length-1]!=undefined){
         shuffle(listInList[usingCount].current);
         custom_word.innerText=listInList[usingCount].current[listInList[usingCount].current.length-1];
@@ -315,37 +329,153 @@ delete_word_button.addEventListener("click",()=>{
 encode_url.addEventListener("click",()=>{
     hideSidebarHandler();
     let json=JSON.stringify(listInList[usingCount]);
-    let encoded=btoa(unescape(encodeURIComponent(json)));
+    let encode_json=btoa(unescape(encodeURIComponent(json)))
+    let encoded=encodeURIComponent(`${location.origin+location.pathname}?data=${encode_json}`);
     try{
-        share_link.innerHTML=`<input readonly value="${location.origin+location.pathname}?data=${encoded}">`;
-        navigator.clipboard.writeText(`${location.origin+location.pathname}?data=${encoded}`);
-        alert("已複製連結至剪貼簿，亦可自行全選複製");
+        share_link.innerHTML=`<input readonly value="${encoded}">`;
+        navigator.clipboard.writeText(`${encoded}`);
+        alert("已複製使用者連結至剪貼簿，亦可自行全選複製");
     }
     catch(e){
         alert("似乎無法產生網址，請開啟無痕視窗嘗試");
     }
 })
-decode_url();
-function decode_url(){
-    const params=new URLSearchParams(location.search);
-    let data=params.get("data");
-    if(!data)return;
-    try{
-        let shared_list=decodeURIComponent(escape(atob(data)));
-        let real_shared=JSON.parse(shared_list);
-        listInList[0]=real_shared;
-        usingCount=0;
-        listInList[0].current=[...real_shared.reserve];
-        listInList[0].reserve=[...real_shared.reserve];
-        custom_word.innerText="這是一個"+real_shared.name+"的關鍵字";
 
+copy_developer_link.addEventListener("click",()=>{
+    hideSidebarHandler();
+    let obj={};
+    obj['list_created']={...listInList};
+    obj['other_settings']={usingCount:usingCount,listCount:listCount,nowCount:nowCount};
+    let json=JSON.stringify(obj);
+    let encoded=btoa(unescape(encodeURIComponent(json)));
+    try{
+        navigator.clipboard.writeText(`${location.origin+location.pathname}?develop=${encoded}`);
+        alert("已複製使用者連結至剪貼簿，亦可自行全選複製");
+    }
+    catch(e){
+        alert("似乎無法產生網址，請開啟無痕視窗嘗試");
+    }
+    console.log(obj);
+})
+save_changes.addEventListener("click",()=>{
+    let obj={};
+    obj['list_created']={...listInList};
+    obj['other_settings']={usingCount:usingCount,listCount:listCount,nowCount:nowCount};
+    let json=JSON.stringify(obj);
+    localStorage.setItem("LocalData",json)
+})
+restart.addEventListener("click",()=>{
+    if(confirm("確定要清除所有自訂清單嗎?")){
+        localStorage.removeItem("LocalData");
+        location.href=location.origin;
+    }
+})
+if(!decode_url()){
+    let shared_list=localStorage.getItem("LocalData");
+    if(shared_list){
+        try{
+        let real_shared=JSON.parse(shared_list);
+        console.log(real_shared);
+        listInList=real_shared.list_created;
+        console.log(listInList);
+        usingCount=real_shared.other_settings.usingCount;
+        listCount=real_shared.other_settings.listCount;
+        nowCount=real_shared.other_settings.nowCount;
+        select_list.innerHTML="";
+        datalist_find.innerHTML="";
+        datalist_delete.innerHTML="";
+        present_list.innerText="正在設定的清單："+listInList[nowCount].name;
+        create_custom_word.placeholder="創建"+listInList[nowCount].name+"的關鍵字";
+        delete_custom_word.placeholder="刪除"+listInList[nowCount].name+"的關鍵字";
+        let temp_count=0;
+        Object.keys(listInList).forEach((list)=>{
+            if(temp_count==0){
+            custom_word.innerText="這是一個"+listInList[list].name+"的關鍵字";
+            }
+            temp_count=1;
+            select_list.innerHTML+=`<li id="selects_option${list}"data-value=\"${list}\">${listInList[list].name}</li>`;
+            datalist_find.innerHTML+=`<option id="find_option${list}" value=\"${listInList[list].name}\"></option>`;
+            datalist_delete.innerHTML+=`<option id="delete_option${list}" value=\"${listInList[list].name}\"></option>`;
+            listInList[list].reserve.forEach((reserved)=>{
+                datalist_word_delete.innerHTML+=`<option id="delete_word_option${reserved}" value=\"${reserved}\"></option>`;
+            })
+            showing_custom_word();
+        })
         select_list.classList.add("hid");
         create_word_group.classList.add("hid");
         custom_word_group.classList.remove("hid");
-        encode_url.classList.add("hid");
-
+        console.log("finishing_storage");
     }
     catch(e){
-        window.location.assign("https://keyword.sealion.page");
+        alert("讀取失敗");
+    }
+    }
+}
+function decode_url(){
+    const params=new URLSearchParams(location.search);
+    let data=params.get("data");
+    let develop=params.get("develop");
+    if(!data&&!develop){
+        return false;
+    }
+    else if(data){
+        try{
+            let shared_list=decodeURIComponent(escape(atob(data)));
+            let real_shared=JSON.parse(shared_list);
+            user=true;
+            listInList[0]=real_shared;
+            usingCount=0;
+            listInList[0].current=[...real_shared.reserve];
+            listInList[0].reserve=[...real_shared.reserve];
+            custom_word.innerText="這是一個"+real_shared.name+"的關鍵字";
+            select_list.classList.add("hid");
+            sidebar.classList.add("hid");
+            create_word_group.classList.add("hid");
+            custom_word_group.classList.remove("hid");
+            encode_url.classList.add("hid");
+
+        }
+        catch(e){
+            alert("讀取失敗...");
+        }
+    }
+    else if(develop){
+        try{
+        let shared_list=decodeURIComponent(escape(atob(develop)));
+        let real_shared=JSON.parse(shared_list);
+        console.log(real_shared);
+        listInList=real_shared.list_created;
+        console.log(listInList);
+        usingCount=real_shared.other_settings.usingCount;
+        listCount=real_shared.other_settings.listCount;
+        nowCount=real_shared.other_settings.nowCount;
+        select_list.innerHTML="";
+        datalist_find.innerHTML="";
+        datalist_delete.innerHTML="";
+        present_list.innerText="正在設定的清單："+listInList[nowCount].name;
+        create_custom_word.placeholder="創建"+listInList[nowCount].name+"的關鍵字";
+        delete_custom_word.placeholder="刪除"+listInList[nowCount].name+"的關鍵字";
+        let temp_count=0;
+        Object.keys(listInList).forEach((list)=>{
+            if(temp_count==0){
+            custom_word.innerText="這是一個"+listInList[list].name+"的關鍵字";
+            }
+            temp_count=1;
+            select_list.innerHTML+=`<li id="selects_option${list}"data-value=\"${list}\">${listInList[list].name}</li>`;
+            datalist_find.innerHTML+=`<option id="find_option${list}" value=\"${listInList[list].name}\"></option>`;
+            datalist_delete.innerHTML+=`<option id="delete_option${list}" value=\"${listInList[list].name}\"></option>`;
+            listInList[list].reserve.forEach((reserved)=>{
+                datalist_word_delete.innerHTML+=`<option id="delete_word_option${reserved}" value=\"${reserved}\"></option>`;
+            })
+            showing_custom_word();
+        })
+        select_list.classList.add("hid");
+        create_word_group.classList.add("hid");
+        custom_word_group.classList.remove("hid");
+        console.log("finishing_decode");
+        }
+        catch(e){
+            alert("讀取失敗!");
+        }
     }
 }
