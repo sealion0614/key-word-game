@@ -330,7 +330,7 @@ encode_url.addEventListener("click",()=>{
     hideSidebarHandler();
     let json=JSON.stringify(listInList[usingCount]);
     let encode_json=btoa(unescape(encodeURIComponent(json)))
-    let encoded=encodeURIComponent(`${location.origin+location.pathname}?data=${encode_json}`);
+    let encoded=`${location.origin+location.pathname}?data=${encodeURIComponent(encode_json)}`;
     try{
         share_link.innerHTML=`<input readonly value="${encoded}">`;
         navigator.clipboard.writeText(`${encoded}`);
@@ -347,9 +347,10 @@ copy_developer_link.addEventListener("click",()=>{
     obj['list_created']={...listInList};
     obj['other_settings']={usingCount:usingCount,listCount:listCount,nowCount:nowCount};
     let json=JSON.stringify(obj);
-    let encoded=btoa(unescape(encodeURIComponent(json)));
+    let encode_json=btoa(unescape(encodeURIComponent(json)))
+    let encoded=`${location.origin+location.pathname}?develop=${encodeURIComponent(encode_json)}`;
     try{
-        navigator.clipboard.writeText(`${location.origin+location.pathname}?develop=${encoded}`);
+        navigator.clipboard.writeText(`${encoded}`);
         alert("已複製使用者連結至剪貼簿，亦可自行全選複製");
     }
     catch(e){
@@ -446,7 +447,6 @@ function decode_url(){
         console.log(real_shared);
         listInList=real_shared.list_created;
         console.log(listInList);
-        usingCount=real_shared.other_settings.usingCount;
         listCount=real_shared.other_settings.listCount;
         nowCount=real_shared.other_settings.nowCount;
         select_list.innerHTML="";
@@ -458,8 +458,11 @@ function decode_url(){
         let temp_count=0;
         Object.keys(listInList).forEach((list)=>{
             if(temp_count==0){
+                usingCount=list;
             custom_word.innerText="這是一個"+listInList[list].name+"的關鍵字";
             }
+            listInList[list].current=[...listInList[list].reserve];
+            listInList[list].reserve=[...listInList[list].reserve];
             temp_count=1;
             select_list.innerHTML+=`<li id="selects_option${list}"data-value=\"${list}\">${listInList[list].name}</li>`;
             datalist_find.innerHTML+=`<option id="find_option${list}" value=\"${listInList[list].name}\"></option>`;
@@ -476,6 +479,7 @@ function decode_url(){
         }
         catch(e){
             alert("讀取失敗!");
+            console.log(e);
         }
     }
 }
