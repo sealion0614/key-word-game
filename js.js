@@ -114,7 +114,7 @@ delete_custom_word.addEventListener("focus",hideSidebarHandler);
 custom_word_create_option.addEventListener("click",()=>{
     hideSidebarHandler();
     console.log("create");
-    
+    setting_family.classList.add("hid");    
     create_word_group.classList.remove("hid");
     custom_word_group.classList.add("hid");
 })
@@ -332,9 +332,8 @@ encode_url.addEventListener("click",()=>{
     let encode_json=btoa(encodeURIComponent(json))
     let encoded=`${location.origin+location.pathname}?data=${encodeURIComponent(encode_json)}`;
     try{
-        share_link.innerHTML=`<input readonly value="${encoded}">`;
         navigator.clipboard.writeText(`${encoded}`);
-        alert("已複製使用者連結至剪貼簿，亦可自行全選複製");
+        alert("已複製使用者連結至剪貼簿");
     }
     catch(e){
         alert("似乎無法產生網址，請開啟無痕視窗嘗試");
@@ -351,7 +350,7 @@ copy_developer_link.addEventListener("click",()=>{
     let encoded=`${location.origin+location.pathname}?develop=${encodeURIComponent(encode_json)}`;
     try{
         navigator.clipboard.writeText(`${encoded}`);
-        alert("已複製使用者連結至剪貼簿，亦可自行全選複製");
+        alert("已複製使用者連結至剪貼簿");
     }
     catch(e){
         alert("似乎無法產生網址，請開啟無痕視窗嘗試");
