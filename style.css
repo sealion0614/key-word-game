@@ -7,6 +7,7 @@ body{
     align-items: center;
     min-height: 100vh;
     word-break: break-all;
+    background-color: rgb(223, 247, 255);
 }
 #create_word_group{
     display:flex;
@@ -91,11 +92,22 @@ li{
 }
 button{
     background:linear-gradient(to right,rgb(79, 61, 150), rgb(232, 217, 237));
-    background-size: 200% 100%;
+    background-size: 150% 150%;
     background-position: right;
     transition: background-position 0.5s ease;
 }
 button:hover,li:hover{
     background-position: left;
     color:rgb(255, 255, 255);
+}
+input{
+    caret-color: auto;
+    color:purple;
+    background-color: rgb(249, 236, 255);
+    border:none;
+    outline: 2px solid rgb(205, 169, 221);
+}
+input:focus{
+    border: 2px solid rgb(161, 10, 221);
+    outline: none;
 }
