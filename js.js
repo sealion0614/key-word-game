@@ -329,7 +329,7 @@ delete_word_button.addEventListener("click",()=>{
 encode_url.addEventListener("click",()=>{
     hideSidebarHandler();
     let json=JSON.stringify(listInList[usingCount]);
-    let encode_json=btoa(unescape(encodeURIComponent(json)))
+    let encode_json=btoa(encodeURIComponent(json))
     let encoded=`${location.origin+location.pathname}?data=${encodeURIComponent(encode_json)}`;
     try{
         share_link.innerHTML=`<input readonly value="${encoded}">`;
@@ -347,7 +347,7 @@ copy_developer_link.addEventListener("click",()=>{
     obj['list_created']={...listInList};
     obj['other_settings']={usingCount:usingCount,listCount:listCount,nowCount:nowCount};
     let json=JSON.stringify(obj);
-    let encode_json=btoa(unescape(encodeURIComponent(json)))
+    let encode_json=btoa(encodeURIComponent(json))
     let encoded=`${location.origin+location.pathname}?develop=${encodeURIComponent(encode_json)}`;
     try{
         navigator.clipboard.writeText(`${encoded}`);
@@ -421,7 +421,7 @@ function decode_url(){
     }
     else if(data){
         try{
-            let shared_list=decodeURIComponent(escape(atob(data)));
+            let shared_list=decodeURIComponent(atob(data));
             let real_shared=JSON.parse(shared_list);
             user=true;
             listInList[0]=real_shared;
@@ -442,7 +442,7 @@ function decode_url(){
     }
     else if(develop){
         try{
-        let shared_list=decodeURIComponent(escape(atob(develop)));
+        let shared_list=decodeURIComponent(atob(develop));
         let real_shared=JSON.parse(shared_list);
         console.log(real_shared);
         listInList=real_shared.list_created;
