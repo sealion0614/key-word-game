@@ -1,13 +1,20 @@
+@font-face {
+    font-family: "iansui";
+    src: url("fonts/Iansui-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
 .hid{
     display: none !important;
 }
 body{
+    font-family: "iansui",sans-serif;
     display:flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     word-break: break-all;
-    background-color: rgb(223, 247, 255);
+    background-color: rgb(166, 195, 205);
 }
 #create_word_group{
     display:flex;
@@ -72,21 +79,25 @@ ul{
     padding-left: 0;
 }
 button{
-    appearance: none;
+    padding:5px;
+    font-family:inherit;
     background: none;
     border:none;
-    margin-top:3px;
-    /* transition: 0.5s ease; */
-    /* background-color: rgb(198, 213, 226); */
-    /* padding: 0; */
+}
+.in_sidebar{
+    margin-top:5px;
+}
+.self_margin{
+    margin-left:5px;
 }
 button,li{
     cursor:pointer;
     font-size: small;
 }
 li{
+    padding:3px;
     background:linear-gradient(to right,rgb(33, 83, 127), rgb(198, 213, 226));
-    background-size: 200% 100%;
+    background-size: 150% 150%;
     background-position: right;
     transition: background-position 0.5s ease;
 }
@@ -110,4 +121,8 @@ input{
 input:focus{
     border: 2px solid rgb(161, 10, 221);
     outline: none;
+}
+h1{
+    display: flex;
+    justify-self: center;
 }
