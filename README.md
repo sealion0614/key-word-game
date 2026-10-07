@@ -4,4 +4,4 @@ youc can create various keyword lists with your own keywords
 https://github.com/ButTaiwan/iansui
 
 # try it out now
-keyword.sealiom.page
+https://keyword.sealiom.page
