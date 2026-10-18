@@ -126,3 +126,15 @@ h1{
     display: flex;
     justify-self: center;
 }
+/* .in button{
+    background-color:rgb(79, 61, 150);
+    color:rgb(255, 255, 255);
+} */
+.in{
+    background:rgb(72, 105, 134);
+    color:rgb(255, 255, 255);
+}
+.in_btn{
+    background:rgb(112, 90, 147);
+    color:rgb(255, 255, 255);
+}

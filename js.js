@@ -49,7 +49,7 @@ sidebar_button.addEventListener("click",()=>{
     hideDistance();
     console.log(sidebar.offsetWidth);
     if(!sidebar_family.classList.contains("second_turn")){
-       sidebar_family.classList.add("second_turn"); 
+       sidebar_family.classList.add("second_turn");
     }
     if(sidebar_family.classList.contains("hide_sidebar")){
         sidebar_family.classList.remove("hide_sidebar");
@@ -114,11 +114,18 @@ delete_custom_word.addEventListener("focus",hideSidebarHandler);
 custom_word_create_option.addEventListener("click",()=>{
     hideSidebarHandler();
     console.log("create");
+    setting_button.classList.remove("in_btn");
+    custom_word_create_option.classList.add("in_btn");
+    Object.keys(listInList).forEach((list)=>{
+        document.getElementById(`selects_option${list}`).classList.remove("in");
+    })
     setting_family.classList.add("hid");    
     create_word_group.classList.remove("hid");
     custom_word_group.classList.add("hid");
 })
 select_button.addEventListener("click",()=>{
+    setting_button.classList.remove("in_btn");
+    custom_word_create_option.classList.remove("in_btn");
     if(select_list.classList.contains("hid")){
         select_button.innerText="選擇清單V";
         select_list.classList.remove("hid");
@@ -134,11 +141,30 @@ select_list.addEventListener("click",(e)=>{
     custom_word_group.classList.remove("hid");
     create_word_group.classList.add("hid");
     setting_family.classList.add("hid");
+    setting_button.classList.remove("in_btn");
+    custom_word_create_option.classList.remove("in_btn");
     listInList[e.target.dataset.value].current=[...listInList[e.target.dataset.value].reserve];
+    Object.keys(listInList).forEach((list)=>{
+        if(list==usingCount){
+            console.log("list"+list);
+            document.getElementById(`selects_option${list}`).classList.add("in");
+            console.log(document.getElementById(`selects_option${list}`).classList);
+        }
+        else{
+            if(document.getElementById(`selects_option${list}`).classList.contains("in")){
+                document.getElementById(`selects_option${list}`).classList.remove("in");
+            }
+        }
+    })
     custom_word.innerText="這是一個"+listInList[e.target.dataset.value].name+"的關鍵字";
 })
 setting_button.addEventListener("click",()=>{
     hideSidebarHandler()
+    setting_button.classList.add("in_btn");
+    custom_word_create_option.classList.remove("in_btn");
+    Object.keys(listInList).forEach((list)=>{
+        document.getElementById(`selects_option${list}`).classList.remove("in");
+    })
     setting_family.classList.remove("hid");
     custom_word_group.classList.add("hid");
     create_word_group.classList.add("hid");
